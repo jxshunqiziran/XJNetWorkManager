@@ -8,6 +8,10 @@
 
 #ifndef XJNetWorkConst_h
 #define XJNetWorkConst_h
+@class  XJBaseRequest;
+
+#define Weakly(weakSelf) __weak typeof(self) weakSelf = self;
+#define Strongly(strongSelf) __strong typeof(weakSelf) strongSelf = weakSelf;
 
 //请求的方式类型:
 typedef NS_ENUM (NSUInteger,XJRequestSendType){
@@ -36,5 +40,7 @@ typedef NS_ENUM(NSInteger,XJRequestSerializer)
     XJRequestSerializerPLIST,
     XJRequestSerializerXML,
 };
+
+typedef void(^XJRequestCallbackBlock)(XJBaseRequest* __nonnull request, id __nullable responseObject, NSError * __nullable error);
 
 #endif /* XJNetWorkConst_h */

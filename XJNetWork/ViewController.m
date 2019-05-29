@@ -22,11 +22,11 @@
     
     [XJNetWorkManager setupConfig:^(XJNetWorkConfig * _Nonnull config) {
         config.baseURL = @"http://bzsns.cn";
+        config.isEnableLog = YES;
     }];
     
-    [XJBaseRequest request].setAPI(@"api/app/check")
+    [XJBaseRequest request].setAPI(@"api/app/check").setParameters(@{@"id":@"96377",@"type":@"activity"})
     .completionSuccessBlock(^(id  resultObject){
-        
         
     })
     .completionFailureBlock(^(id reObj){

@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) NSString *errorUploadAPI;
 
+@property (nonatomic,assign) SEL addSignMethod;//可以利用消息转发来做;
+
 + (instancetype)shareConfig;
 
 @end

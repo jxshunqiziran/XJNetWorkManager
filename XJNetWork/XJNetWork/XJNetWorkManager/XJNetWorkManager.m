@@ -9,6 +9,7 @@
 #import "XJNetWorkManager.h"
 #import "XJRequestOperation.h"
 #import "XJNetWorkConfig.h"
+#import "XJLoggerManager.h"
 
 const  NSString *handleXJNewWorkQueuelable = @"com.xjnetwork.queue";
 
@@ -36,6 +37,7 @@ const  NSString *handleXJNewWorkQueuelable = @"com.xjnetwork.queue";
 - (void)sendRequest:(XJBaseRequest *)request;
 {
     //发送请求:
+    Weakly(weakSelf);
     if (!request.queue) {
         //放到自定义的并行队列:
         request.queue = [self handleXJNewWorkQueue];
@@ -43,8 +45,27 @@ const  NSString *handleXJNewWorkQueuelable = @"com.xjnetwork.queue";
         
     }
     dispatch_async(request.queue, ^{
-        [[XJRequestOperation shareOperation]sendRequest:request];
+        Strongly(strongSelf);
+        [strongSelf setupHandleRequest:request];
     });
+}
+
+- (void)setupHandleRequest:(XJBaseRequest *)request
+{
+    [[XJRequestOperation shareOperation]sendRequest:request completionCallback:^(XJBaseRequest*  _Nonnull request, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (error) {
+            //接口异常上报;
+            request.failureBlock(error);
+        }else{
+            request.successBlock(responseObject);
+        }
+        
+        if (self.config.isEnableLog || request.isEnableLogger) {
+            [[XJLoggerManager shareLogger]setupLogRequest:request];
+        }
+        
+    }];
 }
 
 - (dispatch_queue_t )handleXJNewWorkQueue

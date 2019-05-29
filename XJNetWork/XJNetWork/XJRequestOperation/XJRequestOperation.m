@@ -21,29 +21,31 @@
     return operation;
 }
 
-- (void)sendRequest:(XJBaseRequest *)request;
+- (void)sendRequest:(XJBaseRequest *)request completionCallback:(XJRequestCallbackBlock)callbackBlock;
 {
     
     //1、准备好AFHTTPSessionManager;
     //2、根据请求方式发起请求;
-    //3、回调、错误的处理;
+    //3、把结果交由manager统一处理;
     AFHTTPSessionManager *sessionManager = [self getSessionManager:request];
     NSString *requestUrlString = request.fullURLString;
     id parameters = request.parameters;
+    
+    
     NSURLSessionDataTask *task;//考虑记录到request;
     
     void (^success)(NSURLSessionDataTask * _Nonnull task,id resultObj) = ^(NSURLSessionDataTask * _Nonnull task,id resultObj){
         
-        if (request.successBlock) {
-            request.successBlock(resultObj);
+        if (callbackBlock) {
+            callbackBlock(request,resultObj,nil);
         }
         
     };
     
     void (^failure)(NSURLSessionDataTask * _Nonnull task,NSError * _Nonnull error) = ^(NSURLSessionDataTask * _Nonnull task,NSError * _Nonnull error){
         
-        if (request.failureBlock) {
-            request.failureBlock(error);
+        if (callbackBlock) {
+            callbackBlock(request,nil,error);
         }
         
     };

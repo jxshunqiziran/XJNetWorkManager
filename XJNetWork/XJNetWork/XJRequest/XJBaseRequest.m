@@ -14,7 +14,7 @@
 @interface XJBaseRequest()
 @property (nonatomic,copy,nullable) NSString *BaseURL;
 @property (nonatomic,copy) NSString *api;
-@property (nonatomic,copy,nullable) NSString *parameters;
+@property (nonatomic,copy,nullable) NSDictionary *parameters;
 @property (nonatomic,copy,nullable) NSString *customBaseURL;
 @property (nonatomic,assign) XJRequestSendType method;
 @property (nonatomic,copy) NSString *fullURLString;
@@ -23,6 +23,7 @@
 @property (nonatomic,assign) XJRequestSerializer requestType;
 @property (nonatomic,assign) NSTimeInterval timeOutInterval;
 @property (nonatomic,assign) BOOL isUseDefaultParameters;
+@property (nonatomic,assign) BOOL isEnableLogger;
 
 @end
 
@@ -55,9 +56,17 @@
     };
 }
 
-- (XJBaseRequest *(^)(NSString *parameters))setParameters;
+- (XJBaseRequest *(^)(BOOL isEnable))setisEnableLogger;
 {
-    return ^XJBaseRequest *(NSString *parameters){
+    return  ^XJBaseRequest * (BOOL isEnable){
+        self.isEnableLogger = isEnable;
+        return self;
+    };
+}
+
+- (XJBaseRequest *(^)(NSDictionary *parameters))setParameters;
+{
+    return ^XJBaseRequest *(NSDictionary *parameters){
         self.parameters = parameters;
         return self;
     };

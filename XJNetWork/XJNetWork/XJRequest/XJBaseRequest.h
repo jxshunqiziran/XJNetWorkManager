@@ -42,7 +42,11 @@ typedef void(^XJRequestFailureBlock)(NSError* __nullable error);
 @property(nonatomic,copy,readonly) NSString *api;
 
 /*****请求的参数*******/
-@property(nonatomic,copy,nullable,readonly) NSString *parameters;
+@property(nonatomic,copy,nullable,readonly) NSDictionary *parameters;
+
+@property(nonatomic,assign,readonly) BOOL isUseDefaultParameters;
+
+@property(nonatomic,copy,nullable,readonly) NSDictionary *allParameters;
 
 @property(nonatomic,copy,readonly) NSString *fullURLString;
 
@@ -59,7 +63,7 @@ typedef void(^XJRequestFailureBlock)(NSError* __nullable error);
 /*****请求的超时时间*******/
 @property(nonatomic,assign,readonly) NSTimeInterval timeOutInterval;
 
-@property(nonatomic,assign,readonly) BOOL isUseDefaultParameters;
+@property(nonatomic,assign,readonly) BOOL isEnableLogger;
 
 @property(nonatomic,strong) dispatch_queue_t queue;
 
@@ -72,7 +76,9 @@ typedef void(^XJRequestFailureBlock)(NSError* __nullable error);
 
 - (XJBaseRequest *(^)(NSString *api))setAPI;
 
-- (XJBaseRequest *(^)(NSString *parameters))setParameters;
+- (XJBaseRequest *(^)(NSDictionary *parameters))setParameters;
+
+- (XJBaseRequest *(^)(BOOL isEnable))setisEnableLogger;
 
 - (XJBaseRequest *)startRequest;
 

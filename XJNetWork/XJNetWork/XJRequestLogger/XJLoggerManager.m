@@ -7,6 +7,7 @@
 //
 
 #import "XJLoggerManager.h"
+#import "XJBaseRequest.h"
 
 @implementation XJLoggerManager
 
@@ -22,9 +23,19 @@
 
 - (void)setupLogRequest:(XJBaseRequest *)request;
 {
+    NSMutableString *desc = [NSMutableString string];
+    NSMutableArray  *arr = [NSMutableArray new];
+    [request.parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *keystr = [NSString stringWithFormat:@"%@=%@",key,obj];
+        [arr addObject:keystr];
+    }];
+    NSString *allParamString = [arr componentsJoinedByString:@"&"];
     
-    
-    
+    NSString *fullPath = [NSString stringWithFormat:@"%@%@",request.fullURLString,allParamString];
+    [desc appendString:[NSString stringWithFormat:@"\n****************%@****************\n",fullPath]];
+    [desc appendFormat:@"Parameters: %@\n", request.parameters ?: @"无参数"];
+    [desc appendFormat:@"API: %@\n", request.api ?: @"无API"];
+    NSLog(@"%@",desc);//也可重新request的description方法;
 }
 
 @end

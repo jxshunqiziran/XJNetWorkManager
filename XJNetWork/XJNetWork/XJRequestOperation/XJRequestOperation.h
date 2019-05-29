@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "XJBaseRequest.h"
+#import "XJNetWorkConst.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shareOperation;
 
-- (void)sendRequest:(XJBaseRequest *)request;
+- (void)sendRequest:(XJBaseRequest *)request completionCallback:(XJRequestCallbackBlock)callbackBlock;
 
 @end
 
