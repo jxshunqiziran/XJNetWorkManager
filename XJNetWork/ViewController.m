@@ -23,6 +23,8 @@
     [XJNetWorkManager setupConfig:^(XJNetWorkConfig * _Nonnull config) {
         config.baseURL = @"http://bzsns.cn";
         config.isEnableLog = YES;
+        config.isUseDefaultParameters = YES;
+        config.defaultParameters = @{@"os":@"ios"};
     }];
     
     [XJBaseRequest request].setAPI(@"api/app/check").setParameters(@{@"id":@"96377",@"type":@"activity"})

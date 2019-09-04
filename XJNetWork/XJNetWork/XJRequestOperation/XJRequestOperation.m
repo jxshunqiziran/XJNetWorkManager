@@ -8,6 +8,7 @@
 
 #import "XJRequestOperation.h"
 #import <AFNetworking.h>
+#import "XJNetWorkConfig.h"
 
 @implementation XJRequestOperation
 
@@ -21,7 +22,7 @@
     return operation;
 }
 
-- (void)sendRequest:(XJBaseRequest *)request completionCallback:(XJRequestCallbackBlock)callbackBlock;
+- (void)sendRequest:(XJBaseRequest *)request config:(XJNetWorkConfig* )config completionCallback:(XJRequestCallbackBlock)callbackBlock ;
 {
     
     //1、准备好AFHTTPSessionManager;
@@ -29,9 +30,15 @@
     //3、把结果交由manager统一处理;
     AFHTTPSessionManager *sessionManager = [self getSessionManager:request];
     NSString *requestUrlString = request.fullURLString;
-    id parameters = request.parameters;
-    
-    
+    NSDictionary *parameters = nil;
+    if (config.isUseDefaultParameters && config.defaultParameters && request.isUseDefaultParameters) {
+        NSMutableDictionary *mutableAddtionDic = [request.parameters mutableCopy];
+        [mutableAddtionDic addEntriesFromDictionary:config.defaultParameters];
+        parameters = mutableAddtionDic;
+    }else{
+        parameters = request.parameters;
+    }
+    request.parameters = parameters;
     NSURLSessionDataTask *task;//考虑记录到request;
     
     void (^success)(NSURLSessionDataTask * _Nonnull task,id resultObj) = ^(NSURLSessionDataTask * _Nonnull task,id resultObj){

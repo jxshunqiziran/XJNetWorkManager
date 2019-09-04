@@ -14,7 +14,7 @@
 @interface XJBaseRequest()
 @property (nonatomic,copy,nullable) NSString *BaseURL;
 @property (nonatomic,copy) NSString *api;
-@property (nonatomic,copy,nullable) NSDictionary *parameters;
+//@property (nonatomic,copy,nullable) NSDictionary *parameters;
 @property (nonatomic,copy,nullable) NSString *customBaseURL;
 @property (nonatomic,assign) XJRequestSendType method;
 @property (nonatomic,copy) NSString *fullURLString;
@@ -37,6 +37,7 @@
         /*****相关默认值****/
         _requestType = XJRequestSerializerHTTP;
         _responseType = XJResponseSerializerJSON;
+        _isUseDefaultParameters = YES;
         
     }
     return self;

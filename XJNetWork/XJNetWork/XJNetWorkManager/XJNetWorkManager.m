@@ -52,7 +52,7 @@ const  NSString *handleXJNewWorkQueuelable = @"com.xjnetwork.queue";
 
 - (void)setupHandleRequest:(XJBaseRequest *)request
 {
-    [[XJRequestOperation shareOperation]sendRequest:request completionCallback:^(XJBaseRequest*  _Nonnull request, id  _Nullable responseObject, NSError * _Nullable error) {
+    [[XJRequestOperation shareOperation]sendRequest:request config:self.config completionCallback:^(XJBaseRequest*  _Nonnull request, id  _Nullable responseObject, NSError * _Nullable error) {
         
         if (error) {
             //接口异常上报;

@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *baseURL;
 
 /********* 默认参数 ***********/
-@property (nonatomic,copy) NSString *defaultParameters;
+@property (nonatomic,copy) NSDictionary *defaultParameters;
+
+@property (nonatomic, assign) BOOL isUseDefaultParameters;
 
 /********* 自定义网络不好重试次数 ***********/
 @property (nonatomic, assign) NSUInteger retryCount;

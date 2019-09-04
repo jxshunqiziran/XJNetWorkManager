@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "XJBaseRequest.h"
 #import "XJNetWorkConst.h"
-
+@class XJNetWorkConfig;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XJRequestOperation : NSObject
 
 + (instancetype)shareOperation;
 
-- (void)sendRequest:(XJBaseRequest *)request completionCallback:(XJRequestCallbackBlock)callbackBlock;
+- (void)sendRequest:(XJBaseRequest *)request config:(XJNetWorkConfig* )config completionCallback:(XJRequestCallbackBlock)callbackBlock ;
 
 @end
 
