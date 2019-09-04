@@ -81,6 +81,8 @@ const  NSString *handleXJNewWorkQueuelable = @"com.xjnetwork.queue";
 
 + (void)setupConfig:(void(^)(XJNetWorkConfig *config))configBlock;
 {
+    
+    
     [[self manager]setupConfig:configBlock];
 }
 
